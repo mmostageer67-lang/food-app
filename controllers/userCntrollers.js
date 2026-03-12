@@ -139,4 +139,22 @@ res.status(200).json({
         })
     }
 }
-module.exports={getUserControllers,updateUser,updatepassword,resetpassowrd}
+const deleteUser=async(req,res)=>
+{
+try {
+    await userModel.findByIdAndDelete(req.params.id)
+
+res.status(200).json({
+    succes:true,
+    message:'user deleted',
+    
+})
+} catch (error) {
+    res.status(500).json({
+        succes:false,
+        message:'error delete api!',
+        error
+    })
+}
+}
+module.exports={getUserControllers,updateUser,updatepassword,resetpassowrd,deleteUser}

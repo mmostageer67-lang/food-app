@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
           message: "PLEASE PROVIDE THE USER TOKEN!",
         });
       } else {
-        req.body.id = decode.id;
+    req.user = { id: decode.id }
         next();
       }
     });
