@@ -27,8 +27,33 @@ res.status(201).json({
     }
 }
 
-const updateUser=()=>
+const updateUser=async(req,res)=>
 {
-
+try{
+const user =await userModel .findById({_id:req.body.id})
+if(!user)
+{
+  res.status(404).json  ({
+    succes:false,
+    message:'user not found!'
+  })
+}
+const {userName,address,phone}=req.body
+if(userName)user.userName=userName
+if(address)user.address=address
+if(phone)user.phone=phone
+await user.save()
+res.status(201).json({
+    succes:true,
+    message:'user updated success.'
+})
+}catch(error)
+{
+    res.status(500).json({
+        succes:false,
+        message:'error api',
+        error
+    })
+}
 }
 module.exports={getUserControllers,updateUser}
