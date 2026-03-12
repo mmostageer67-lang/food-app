@@ -3,10 +3,10 @@ const bcrypt=require('bcrypt')
 const JWT=require('jsonwebtoken')
 const registerControllers=async(req,res)=>{
     try{
-const {userName,email,password,phone ,address}=req.body
-if(!userName||!email||!password||!phone||!address)
+const {userName,email,password,phone ,address,answer}=req.body
+if(!userName||!email||!password||!phone||!address||!answer)
 {
-    res.status(500).json({
+   return res.status(400).json({
         
         succes:false,
         message:'you have problem n filedes pleas complete it!'})
@@ -22,7 +22,7 @@ var salt=bcrypt.genSaltSync(10)
 const hashPassword=await bcrypt.hash(password,salt)
 
 
-const user =await userModel.create({userName,email,password:hashPassword,phone ,address})
+const user =await userModel.create({userName,email,password:hashPassword,phone ,address,answer})
 res.status(201).json({
     succes:true,
     message:'the user created succsessfully.',
@@ -43,7 +43,7 @@ try{
 const{email,password}=req.body
 if(!email||!password)
 {
-    res.status(400).json({
+   return res.status(400).json({
         succes:false,
         message:'EMAIL OR PASSWORD INCORRECT!'
     
@@ -51,7 +51,7 @@ if(!email||!password)
     const user=await userModel.findOne({email})
 if(!user)
 {
-    res.status(404).json({
+    return res.status(404).json({
         succes:false,
         message:'the user not found!',
         
@@ -60,7 +60,7 @@ if(!user)
 const isMarch=await bcrypt.compare(password,user.password)
 if(!isMarch)
 {
-    res.status(400).json({
+   return res.status(400).json({
         succes:false,
         message:'invalide credintial!'
     })
