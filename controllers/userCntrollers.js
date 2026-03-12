@@ -100,4 +100,43 @@ res.status(500).json({
 })
 }
 }
-module.exports={getUserControllers,updateUser,updatepassword}
+const resetpassowrd=async(req,res)=>
+{
+    try{
+const {email,newPassword,answer}=req.body
+if(!email||!newPassword||!answer)
+{
+    res.status(500).json({
+        succes:false,
+        message:'please provide all fildes'
+    })
+}
+const user=await userModel.findOne({email,answer})
+if(!user)
+{
+    res.status(500).json(
+        {
+            succes:false,
+            message:'user not fund'
+        }
+    )
+}
+ salt=bcrypt.genSaltSync(10)
+const hashPassword=await bcrypt.hash(newPassword,salt)
+user.password=hashPassword
+await user.save()
+res.status(200).json({
+    succes:true,
+    message:'password reset succesfully'
+})
+    }catch(error)
+
+    {
+        res.status(500).json({
+            succes:false,
+            message:'error in password api',
+            error
+        })
+    }
+}
+module.exports={getUserControllers,updateUser,updatepassword,resetpassowrd}
