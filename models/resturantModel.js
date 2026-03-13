@@ -54,7 +54,7 @@ coords:
    latitudeDelta:{type:Number},
    longitude:{type:Number},
 longitudeDelta:{type:Number},
-   adderss:{type:String},
+   address:{type:String},
    title:{type:String}
 }
 },{timestamps:true})
