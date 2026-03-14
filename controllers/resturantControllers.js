@@ -47,4 +47,27 @@ res.status(200).json({
   })  
 }
 }
-module.exports = {resturantCntrollers}
+const getAllResturant=async(req,res)=>
+{
+  try {
+    const resturants=await resturantModel.find({})
+    if(!resturants)
+    {
+      res.status(404).json({
+        success:false,
+        message:'NO RESTURANT AVILABLE'
+      })
+    }
+    res.status(200).json({
+      success:true,
+      totalCount:resturants.length,
+resturants
+    })
+  } catch (error) {
+    res.status(500).json({
+success:false,
+message:'API ERROR'
+    })
+  }
+}
+module.exports = {resturantCntrollers,getAllResturant}
