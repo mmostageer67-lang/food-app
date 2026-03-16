@@ -39,7 +39,9 @@ await newResturant.save()
 res.status(200).json({
     success:true,
     message:"new resturant created successfuly"
+
 })
+
 } catch (error) {
   res.status(500).json({
     success:false,
@@ -105,4 +107,31 @@ const getResturant=async(req,res)=>
     })
   }
 }
-module.exports = {resturantCntrollers,getAllResturant,getResturant}
+const deleteResturant=async(req,res)=>
+{
+  try {
+    const resturantId=req.params.id
+    if(!resturantId)
+    {return res.status.json({
+      success:false,
+      message:'THE ID NOT FOUND || RESTURANT !'
+    })}
+    await resturantModel.findByIdAndDelete(resturantId)
+
+    
+
+    res.status(200).json({
+      success:true,
+      message:'RESTAURANT DELETED SUCCESSFULLY'
+    })
+    
+
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:'ERROR IN DELETE API!',
+      error
+    })
+  }
+}
+module.exports = {resturantCntrollers,getAllResturant,getResturant,deleteResturant}

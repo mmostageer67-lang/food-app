@@ -6,7 +6,7 @@ router.get('/getUser',authMiddleware,getUserControllers)
 router.put('/updateUser',authMiddleware,updateUser)
 router.post('/updatePassword',authMiddleware,updatepassword)
 
-router.post('/resetPassword',authMiddleware,resetpassowrd)
+router.post('/resetPassword',resetpassowrd)
 router.delete('/deleteUser/:id',authMiddleware,deleteUser)
 
 
