@@ -84,4 +84,29 @@ const updateCategory=async(req,res)=>
         })
     }
 }
-module.exports = {creatCategoryController,getAllCategorys,updateCategory}
+const deleteCategory=async(req,res)=>
+{
+    try {
+        const{id}=req.params
+        await categoryModel.findByIdAndDelete({_id:req.params.id})
+if(!id)
+{
+     res.status(500).json({
+            cuccess:false,
+            message:'pleas provide the id!'
+            
+        })
+}
+res.status(200).json({
+    succes:true,
+    message:'the category deleted cuccessfully.'
+})
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            message:'error delete category',
+            error
+        })
+    }
+}
+module.exports = {creatCategoryController,getAllCategorys,updateCategory,deleteCategory}
