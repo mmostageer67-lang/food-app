@@ -51,4 +51,37 @@ res.status(201).json({
        }) 
     }
 }
-module.exports={creatFood}
+const updateFood=async(req,res)=>
+{
+    try {
+        const {id}=req.params
+        const{title,imageUrl}=req.body
+        if(!title||imageUrl)
+        {
+            res.status(500).json({
+                succes:false,
+                message:'PLEASE PROVIDE TITLE OR IMAGEURL'
+            })
+        }
+       const updateFood = await foodModel .findByIdAndUpdate(id,{title,imageUrl},{new:true})
+         if(!updateFood)
+         {
+           res.status(500).json({
+                succes:false,
+                message:'update food not found!'
+            }) 
+         }
+         res.status(200).json({
+            cuccess:true,
+            message:'updated successfully.',
+            updateFood
+         })
+    } catch (error) {
+        res.status(500).json({
+            cuccess:false,
+            message:'error in update food!',
+            error
+        })
+    }
+}
+module.exports={creatFood,updateFood}
