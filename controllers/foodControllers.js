@@ -84,4 +84,31 @@ const updateFood=async(req,res)=>
         })
     }
 }
-module.exports={creatFood,updateFood}
+const deleteFood=async(req,res)=>
+{
+  try {
+    const foodId=req.params.id
+    if(!foodId)
+    {return res.status.json({
+      success:false,
+      message:'THE ID NOT FOUND || RESTURANT !'
+    })}
+    await foodModel.findByIdAndDelete(foodId)
+
+    
+
+    res.status(200).json({
+      success:true,
+      message:'food DELETED SUCCESSFULLY'
+    })
+    
+
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:'ERROR IN DELETE API!',
+      error
+    })
+  }
+}
+module.exports={creatFood,updateFood,deleteFood}
