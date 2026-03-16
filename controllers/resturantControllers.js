@@ -1,4 +1,5 @@
 const resturantModel = require("../models/resturantModel")
+const mongoose = require("mongoose")
 
 const resturantCntrollers=async(req,res)=>
 {
@@ -53,7 +54,7 @@ const getAllResturant=async(req,res)=>
     const resturants=await resturantModel.find({})
     if(!resturants)
     {
-      res.status(404).json({
+      return res.status(404).json({
         success:false,
         message:'NO RESTURANT AVILABLE'
       })
@@ -66,8 +67,42 @@ resturants
   } catch (error) {
     res.status(500).json({
 success:false,
-message:'API ERROR'
+message:'API ERROR',
+error
     })
   }
 }
-module.exports = {resturantCntrollers,getAllResturant}
+const getResturant=async(req,res)=>
+{
+  try {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+  {
+    return res.status(400).json({
+      success:false,
+      message:'INVALID RESTURANT ID'
+    })
+  }
+
+  const resturant=await resturantModel.findById(id)
+  if(!resturant)
+  {
+    return res.status(404).json({
+      success:false,
+      message:'RESTURANT NOT FOUND!'
+    })
+  }
+  return res.status(200).json({
+    success:true,
+    resturant
+  })
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:'Error Api',
+      error:error.message
+    })
+  }
+}
+module.exports = {resturantCntrollers,getAllResturant,getResturant}
