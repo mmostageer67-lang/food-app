@@ -19,6 +19,7 @@ app.use('/api/v1/test',require('./routes/testRoutes'))
 app.use('/api/v1/auth',require('./routes/authRoutes'))
 app.use('/api/v1/user',require('./routes/userRoutes'))
 app.use('/api/v1/Resturant',require('./routes/resturantRoutes'))
+app.use('/api/v1/category',require('./routes/categoryRoutes'))
 
 const PORT=process.env.PORT||8080
 app.listen(PORT,()=>console.log(`'starting the server ${PORT}'`.bgGreen.white))
